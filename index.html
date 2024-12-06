@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Light Bulb Toggle</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f0f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .light-bulb-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .light-bulb {
+      font-size: 150px;
+      color: #ffeb3b;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .hidden {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+
+    .controls {
+      display: flex;
+      gap: 15px;
+    }
+
+    button {
+      background-color: #6200ea;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #3700b3;
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: translateY(2px);
+    }
+
+    p {
+      font-size: 1rem;
+      color: #555;
+    }
+
+    .blink-counter {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #6200ea;
+    }
+  </style>
+</head>
+<body>
+  <h1>Light Bulb Toggle</h1>
+  <div class="light-bulb-container">
+    <div id="light-bulb" class="light-bulb">💡</div>
+    <p>Blinks: <span id="blink-counter" class="blink-counter">0</span></p>
+  </div>
+  <div class="controls">
+    <button id="start-btn">Start Blinking</button>
+    <button id="stop-btn">Stop Blinking</button>
+  </div>
+
+  <script>
+    const lightBulb = document.getElementById('light-bulb');
+const startBtn = document.getElementById('start-btn');
+const stopBtn = document.getElementById('stop-btn');
+const blinkCounter = document.getElementById('blink-counter');
+
+let blinkInterval;
+let timeoutId;     
+let counter = 0;   
+
+const startBlinking = () => {
+  clearInterval(blinkInterval);
+  clearTimeout(timeoutId);
+  counter = 0;
+  blinkCounter.textContent = counter;
+  blinkInterval = setInterval(() => {
+    lightBulb.classList.toggle('hidden');
+    counter++;
+    blinkCounter.textContent = counter;
+  }, 500);
+
+  timeoutId = setTimeout(() => {
+    stopBlinking();
+  }, 20000);
+};
+
+const stopBlinking = () => {
+  clearInterval(blinkInterval);
+  clearTimeout(timeoutId); 
+  lightBulb.classList.remove('hidden');
+};
+startBtn.addEventListener('click', startBlinking);
+stopBtn.addEventListener('click', stopBlinking);
+
+  </script>
+</body>
+</html>
